@@ -9,7 +9,7 @@ A next-gen autonomous trading system designed to continuously learn, adapt, and 
 
 ---
 
-## 📘 What This Project Is About
+##What This Project Is About
 
 Markets change. A strategy that worked last week might not work tomorrow. That’s why I built this: a **self-evolving trading agent** that doesn’t rely on static rules. Instead, it analyzes live market data, experiments with different approaches, learns from mistakes, and keeps improving.
 
@@ -17,7 +17,7 @@ This system pulls in real-time data (price, volume, sentiment), uses reinforceme
 
 ---
 
-## 🧠 What It Can Do
+## What It Can Do
 
 - ✅ Understand live market signals and turn them into actionable insights
 - 🔁 Continuously update its strategy based on real-time feedback
@@ -27,7 +27,7 @@ This system pulls in real-time data (price, volume, sentiment), uses reinforceme
 
 ---
 
-## 🔍 How It Works (In Simple Terms)
+##How It Works (In Simple Terms)
 
 The system has four main pieces:
 
@@ -45,7 +45,7 @@ The system has four main pieces:
 
 ---
 
-## 🧰 Tech Stack
+##Tech Stack
 
 | Area                 | Tools Used                               |
 |----------------------|-------------------------------------------|
