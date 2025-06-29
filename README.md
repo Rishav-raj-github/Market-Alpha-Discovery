@@ -3,7 +3,7 @@ Self-Evolving Autonomous Agent for Market Alpha Discovery _ _ Named __ GammaCraf
 
 
 
-# 🤖 Self-Evolving Autonomous Agent for Market Alpha Discovery
+#Self-Evolving Autonomous Agent for Market Alpha Discovery
 
 A next-gen autonomous trading system designed to continuously learn, adapt, and evolve — all with one goal: discovering alpha in real-world financial markets. This project is about going beyond rule-based bots and building a system that **actually learns from the market**, adjusts its own strategies, and makes smart decisions on its own.
 
