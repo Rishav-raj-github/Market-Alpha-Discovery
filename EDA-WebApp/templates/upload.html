@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDA WebApp - Upload & Analyze</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+        .main-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            padding: 2rem;
+        }
+        .header-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .header-section h1 {
+            color: #667eea;
+            font-weight: 700;
+        }
+        .upload-zone {
+            border: 2px dashed #667eea;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        .upload-zone:hover {
+            border-color: #764ba2;
+            background: #e9ecef;
+        }
+        .btn-primary-custom {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        .results-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        .d-none {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="main-card">
+                    <!-- Header -->
+                    <div class="header-section">
+                        <h1>📊 Exploratory Data Analysis WebApp</h1>
+                        <p class="text-muted">Upload your dataset and perform advanced EDA with ease</p>
+                    </div>
+
+                    <!-- Alert Area -->
+                    <div id="alertArea" aria-live="polite"></div>
+
+                    <!-- File Upload Section -->
+                    <section id="uploadSection">
+                        <form id="uploadForm" enctype="multipart/form-data">
+                            <div class="upload-zone">
+                                <h4>📁 Upload Your Dataset</h4>
+                                <p class="text-muted">Supported formats: CSV, XLSX, XLS, PDF</p>
+                                <div class="mb-3">
+                                    <input type="file" class="form-control" id="dataFile" name="dataFile" accept=".csv,.xlsx,.xls,.pdf" required>
+                                    <div class="invalid-feedback">Please select a valid file.</div>
+                                </div>
+                                <button type="submit" class="btn btn-primary-custom" id="btnUpload">
+                                    <span id="uploadSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                    Upload File
+                                </button>
+                            </div>
+                        </form>
+                        <div id="fileMeta" class="mt-3 d-none"></div>
+                    </section>
+
+                    <!-- EDA Controls Section -->
+                    <section id="edaControlsSection" class="mt-4 d-none">
+                        <hr>
+                        <h4>🔍 Select EDA Action</h4>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="edaAction" class="form-label">Choose Analysis Type</label>
+                                <select class="form-select" id="edaAction" name="edaAction">
+                                    <option value="" selected>-- Select Action --</option>
+                                    <option value="summary">📋 Summary Statistics</option>
+                                    <option value="missing">❓ Missing Values Analysis</option>
+                                    <option value="distribution">📊 Distribution Plot</option>
+                                    <option value="correlation">🔗 Correlation Matrix</option>
+                                    <option value="outliers">🎯 Outlier Detection</option>
+                                    <option value="pairplot">📈 Pairplot</option>
+                                    <option value="histogram">📉 Histogram</option>
+                                    <option value="boxplot">📦 Boxplot</option>
+                                    <option value="scatterplot">⚫ Scatter Plot</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div id="paramContainer">
+                                    <label class="form-label">Parameters</label>
+                                    <div class="text-muted" id="paramPlaceholder" aria-live="polite">Choose an analysis to see parameters.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="button" class="btn btn-primary-custom" id="btnRun" disabled>
+                                <span id="runSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                Run Analysis
+                            </button>
+                            <button type="button" class="btn btn-secondary" id="btnReset" disabled>Reset</button>
+                        </div>
+                    </section>
+
+                    <!-- Results Section -->
+                    <section id="resultsSection" class="results-section d-none">
+                        <h4>📊 Analysis Results</h4>
+                        <div id="resultsContent"></div>
+                        <div id="resultsViz" class="mt-3"></div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+      // DOM Elements
+      const uploadForm = document.getElementById('uploadForm');
+      const dataFile = document.getElementById('dataFile');
+      const uploadSpinner = document.getElementById('uploadSpinner');
+      const fileMeta = document.getElementById('fileMeta');
+      const edaControlsSection = document.getElementById('edaControlsSection');
+      const edaAction = document.getElementById('edaAction');
+      const paramContainer = document.getElementById('paramContainer');
+      const btnRun = document.getElementById('btnRun');
+      const btnReset = document.getElementById('btnReset');
+      const runSpinner = document.getElementById('runSpinner');
+      const resultsSection = document.getElementById('resultsSection');
+      const resultsContent = document.getElementById('resultsContent');
+      const resultsViz = document.getElementById('resultsViz');
+      const alertArea = document.getElementById('alertArea');
+
+      // Helper Functions
+      function show(el) { el.classList.remove('d-none'); }
+      function hide(el) { el.classList.add('d-none'); }
+      
+      function setAlert(message, type='info') {
+        alertArea.innerHTML = `<div class="alert alert-${type}" role="alert">${message}</div>`;
+      }
+
+      function resetResults() {
+        resultsContent.innerHTML = '';
+        resultsViz.innerHTML = '';
+        hide(resultsSection);
+      }
+
+      // Parameter builders for different actions
+      const actionParamBuilders = {
+        distribution: () => `
+          <label class="form-label">Column Name</label>
+          <input type="text" class="form-control" id="paramColumn" placeholder="e.g., age" />
+        `,
+        histogram: () => `
+          <label class="form-label">Column Name</label>
+          <input type="text" class="form-control" id="paramColumn" placeholder="e.g., price" />
+        `,
+        boxplot: () => `
+          <label class="form-label">Column Name</label>
+          <input type="text" class="form-control" id="paramColumn" placeholder="e.g., salary" />
+        `,
+        scatterplot: () => `
+          <label class="form-label">X Column</label>
+          <input type="text" class="form-control mb-2" id="paramX" placeholder="e.g., age" />
+          <label class="form-label">Y Column</label>
+          <input type="text" class="form-control" id="paramY" placeholder="e.g., income" />
+        `,
+        outliers: () => `
+          <label class="form-label">Column Name</label>
+          <input type="text" class="form-control" id="paramColumn" placeholder="e.g., value" />
+        `
+      };
+
+      // File Upload Handler
+      uploadForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (!dataFile.files.length) {
+          dataFile.classList.add('is-invalid');
+          setAlert('Please select a file to upload.', 'warning');
+          return;
+        }
+        
+        dataFile.classList.remove('is-invalid');
+        document.getElementById('btnUpload').setAttribute('disabled', 'true');
+        uploadSpinner.classList.remove('d-none');
+        
+        const file = dataFile.files[0];
+        const allowed = ['text/csv', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel', 'application/pdf'];
+        const isCsvByName = file.name.toLowerCase().endsWith('.csv');
+        
+        if (!allowed.includes(file.type) && !isCsvByName) {
+          setAlert('Unsupported file type. Please upload CSV, XLSX/XLS, or PDF.', 'danger');
+          uploadSpinner.classList.add('d-none');
+          document.getElementById('btnUpload').removeAttribute('disabled');
+          return;
+        }
+        
+        // Simulate file upload (replace with actual backend call)
+        setTimeout(() => {
+          fileMeta.classList.remove('d-none');
+          fileMeta.innerHTML = `<div class="alert alert-success" role="status">Uploaded: <strong>${file.name}</strong> (${Math.round(file.size/1024)} KB). Session initialized.</div>`;
+          show(edaControlsSection);
+          document.getElementById('btnUpload').removeAttribute('disabled');
+          uploadSpinner.classList.add('d-none');
+          setAlert('File prepared. Choose an EDA action to continue.', 'info');
+        }, 900);
+      });
+
+      // EDA Action Change Handler
+      edaAction.addEventListener('change', function() {
+        resetResults();
+        btnRun.removeAttribute('disabled');
+        btnReset.removeAttribute('disabled');
+        
+        const val = this.value;
+        const builder = actionParamBuilders[val] || (() => '');
+        const html = builder();
+        paramContainer.innerHTML = '<label class="form-label">Parameters</label>' + (html || '<div class="text-muted">No parameters for this action.</div>');
+      });
+
+      // Reset Button Handler
+      btnReset.addEventListener('click', function() {
+        edaAction.value = '';
+        paramContainer.innerHTML = '<label class="form-label">Parameters</label><div class="text-muted" id="paramPlaceholder" aria-live="polite">Choose an analysis to see parameters.</div>';
+        btnRun.setAttribute('disabled', 'true');
+        btnReset.setAttribute('disabled', 'true');
+        resetResults();
+        hide(resultsSection);
+      });
+
+      // Run Analysis Button Handler
+      btnRun.addEventListener('click', function() {
+        resetResults();
+        const action = edaAction.value;
+        
+        if (!action) {
+          setAlert('Please select an EDA action first.', 'warning');
+          return;
+        }
+        
+        btnRun.setAttribute('disabled', 'true');
+        runSpinner.classList.remove('d-none');
+        
+        // Collect parameters based on action
+        const params = { action: action };
+        const paramColumn = document.getElementById('paramColumn');
+        const paramX = document.getElementById('paramX');
+        const paramY = document.getElementById('paramY');
+        
+        if (paramColumn) params.column = paramColumn.value;
+        if (paramX) params.x = paramX.value;
+        if (paramY) params.y = paramY.value;
+        
+        // Simulate backend call (replace with actual API call)
+        setTimeout(() => {
+          show(resultsSection);
+          resultsContent.innerHTML = `
+            <div class="alert alert-info">
+              <strong>Analysis Type:</strong> ${action}<br>
+              <strong>Parameters:</strong> ${JSON.stringify(params, null, 2)}<br>
+              <em>Backend integration pending - results will appear here.</em>
+            </div>
+          `;
+          runSpinner.classList.add('d-none');
+          btnRun.removeAttribute('disabled');
+          setAlert('Analysis completed! Check results below.', 'success');
+        }, 1200);
+      });
+    </script>
+</body>
+</html>
