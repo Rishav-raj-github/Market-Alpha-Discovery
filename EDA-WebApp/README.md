@@ -1,191 +1,152 @@
-# EDA-WebApp: Advanced Exploratory Data Analysis Platform
+# 🌐 **EDA Web Application - Access Now!**
+
+## **💻 Local Website Link:** 
+### **[http://localhost:5000](http://localhost:5000)**
+
+*Start the app by running `python app.py` and visit the link above to begin your data analysis journey!*
+
+---
+
+# EDA Automation Web Application
 
 ## Overview
-EDA-WebApp is an advanced, interactive web application designed for comprehensive Exploratory Data Analysis (EDA) on user-uploaded files. This platform provides a streamlined, dropdown-based interface for analyzing Excel, CSV, and PDF files with professional-grade statistical analysis and visualizations.
+A professional Exploratory Data Analysis (EDA) web application built with Flask that provides comprehensive data analysis capabilities through an intuitive dropdown-driven interface. This application enables users to perform advanced statistical analysis and visualization on their datasets without writing code.
 
 ## Features
 
-### 📊 Supported File Formats
-- **Excel files** (.xlsx, .xls)
-- **CSV files** (.csv)
-- **PDF files** (.pdf) - Extract tabular data for analysis
+### 🚀 Advanced EDA Capabilities
+- **Dropdown-Driven Analysis**: Navigate through different EDA sections using intuitive dropdown menus
+- **Comprehensive Statistical Summary**: Descriptive statistics, data types, and basic information
+- **Missing Value Analysis**: Identify, visualize, and understand null patterns
+- **Advanced Visualizations**: Interactive charts using Plotly, Seaborn, and Matplotlib
+- **Outlier Detection**: Statistical and visual outlier identification methods
+- **Data Encoding**: Automatic handling of categorical variables
+- **Feature Importance**: ML-based feature ranking and correlation analysis
+- **Distribution Analysis**: Histogram, box plots, and probability distributions
+- **Correlation Matrix**: Heatmaps and correlation insights
 
-### 🔍 Advanced EDA Capabilities
-All analysis options are accessible through intuitive dropdown menus:
+### 📁 File Upload Support
+- **Drag-and-Drop Interface**: Easy file upload with visual feedback
+- **Multiple Format Support**:
+  - CSV files (.csv)
+  - Excel files (.xlsx, .xls)
+  - PDF files (.pdf) with text extraction
+- **File Validation**: Automatic format detection and error handling
+- **Large File Support**: Efficient processing of datasets up to 100MB
 
-1. **Data Overview**
-   - Dataset preview (first/last rows)
-   - Data types and shape information
-   - Column names and structure
+### 🎨 User Interface Design
+- **Responsive Web Design**: Mobile and desktop friendly
+- **Professional Dashboard**: Clean, modern interface
+- **Interactive Menu System**: 
+  - Main navigation dropdown
+  - Section-specific analysis options
+  - Dynamic result displays
+- **Real-time Feedback**: Progress indicators and status updates
+- **Export Capabilities**: Download analysis results and visualizations
 
-2. **Statistical Analysis**
-   - Summary statistics (mean, median, mode, std dev)
-   - Quartile analysis
-   - Distribution analysis
-   - Skewness and kurtosis
+### 🌐 Local Website Access
+**Access your EDA application locally at:** `http://localhost:5000`
 
-3. **Data Quality Assessment**
-   - Missing values detection and visualization
-   - Duplicate rows identification
-   - Outlier detection (IQR method, Z-score)
-   - Data completeness percentage
+## Interface Menu Structure
 
-4. **Visualizations**
-   - Interactive histograms
-   - Box plots for outlier detection
-   - Scatter plots for relationship analysis
-   - Correlation heatmaps
-   - Distribution plots
-   - Pair plots for multivariate analysis
+```
+📊 EDA Dashboard
+├── 📈 Data Summary
+│   ├── Basic Information
+│   ├── Descriptive Statistics
+│   └── Data Types Overview
+│
+├── 🕳️ Missing Values Analysis
+│   ├── Null Patterns
+│   ├── Missing Data Visualization
+│   └── Imputation Suggestions
+│
+├── 📊 Data Visualizations
+│   ├── Distribution Plots
+│   ├── Correlation Heatmaps
+│   ├── Scatter Plots
+│   └── Box Plots
+│
+├── 🎯 Outlier Detection
+│   ├── Statistical Methods (IQR, Z-score)
+│   ├── Isolation Forest
+│   └── Visual Outlier Identification
+│
+├── 🔤 Data Encoding
+│   ├── Label Encoding
+│   ├── One-Hot Encoding
+│   └── Target Encoding
+│
+└── ⭐ Feature Importance
+    ├── Correlation-based Ranking
+    ├── Mutual Information
+    └── Random Forest Importance
+```
 
-5. **Correlation Analysis**
-   - Pearson correlation matrix
-   - Spearman correlation
-   - Interactive correlation heatmaps
-   - Feature relationship insights
+## Quick Start
 
-6. **Advanced Analytics**
-   - Feature importance analysis
-   - Categorical variable analysis
-   - Time series analysis (if date columns detected)
-   - Group-by operations with aggregations
-
-## Installation
-
-### Prerequisites
-- Python 3.8 or higher
-- pip package manager
-
-### Setup Instructions
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/Rishav-raj-github/Market-Alpha-Discovery.git
-   cd Market-Alpha-Discovery
-   git checkout eda-automation-webapp
-   cd EDA-WebApp
-   ```
-
-2. **Install dependencies**
+1. **Installation**:
    ```bash
    pip install -r requirements.txt
    ```
 
-3. **Run the application**
+2. **Run Application**:
    ```bash
-   streamlit run EDA_app.py
+   python app.py
    ```
 
-4. **Access the application**
-   - The app will automatically open in your default browser
-   - Or manually navigate to: **http://localhost:8501**
+3. **Access Interface**:
+   Open `http://localhost:5000` in your web browser
 
-## Usage
+4. **Upload Data**:
+   - Drag and drop your file or click to browse
+   - Supported formats: CSV, Excel, PDF
+   - Maximum file size: 100MB
 
-1. **Launch the app** using `streamlit run EDA_app.py`
-2. **Upload your file** (Excel, CSV, or PDF) using the file uploader
-3. **Select analysis type** from the dropdown menu
-4. **Choose specific options** from sub-dropdown menus
-5. **View interactive results** with dynamic charts and reports
-6. **Download analysis** results if needed
+5. **Analyze Data**:
+   - Use dropdown menus to navigate analysis sections
+   - View interactive visualizations
+   - Export results as needed
 
-## User Interface
+## Technology Stack
 
-The application features a clean, dropdown-based interface:
-- 🎯 **Main Menu Dropdown**: Select primary analysis category
-- 📋 **Sub-Menu Dropdowns**: Choose specific analysis within category
-- 🎨 **Interactive Visualizations**: Powered by Plotly for zoom, pan, and export
-- 📊 **Real-time Updates**: Analysis updates automatically based on selections
-
-## Technical Stack
-
-- **Frontend Framework**: Streamlit
+- **Backend**: Flask (Python web framework)
 - **Data Processing**: Pandas, NumPy
-- **Visualizations**: Plotly, Seaborn, Matplotlib
-- **PDF Processing**: PyPDF2, Tabula-py
-- **Excel Support**: openpyxl, xlrd
-- **Statistical Analysis**: SciPy, Scikit-learn
+- **Visualizations**: Plotly, Matplotlib, Seaborn
+- **Frontend**: HTML5, CSS3, JavaScript
+- **File Processing**: openpyxl, PyPDF2
+- **Machine Learning**: Scikit-learn
 
 ## Project Structure
 
 ```
 EDA-WebApp/
-│
-├── README.md              # Project documentation
+├── app.py                 # Main Flask application
 ├── requirements.txt       # Python dependencies
-└── EDA_app.py            # Main Streamlit application
+├── README.md             # Project documentation
+├── templates/            # HTML templates
+│   ├── base.html        # Base template
+│   └── upload.html      # File upload interface
+├── static/              # Static assets
+│   ├── css/            # Custom stylesheets
+│   ├── js/             # JavaScript files
+│   └── images/         # Image assets
+└── uploads/             # Temporary file storage
 ```
-
-## Features in Detail
-
-### Dropdown-Based Navigation
-Every feature is accessible through organized dropdowns:
-- No cluttered interface
-- Easy navigation
-- Beginner-friendly
-- Professional appearance
-
-### Interactive Charts
-- Zoom and pan capabilities
-- Hover for detailed information
-- Export charts as images
-- Responsive design
-
-### Real-time Analysis
-- Instant feedback on file upload
-- Fast processing with caching
-- Progress indicators for long operations
-- Error handling with helpful messages
-
-## Best Practices
-
-- **Data Privacy**: All processing happens locally; no data is sent to external servers
-- **File Size**: Recommended maximum file size is 200MB for optimal performance
-- **Data Format**: Ensure your CSV/Excel files have headers in the first row
-- **PDF Files**: Work best with structured tables
-
-## Troubleshooting
-
-**App won't start?**
-- Ensure all dependencies are installed: `pip install -r requirements.txt`
-- Check Python version: `python --version` (should be 3.8+)
-
-**File upload fails?**
-- Verify file format is supported (.csv, .xlsx, .xls, .pdf)
-- Check file size (should be under 200MB)
-- Ensure file is not corrupted
-
-**Visualization not showing?**
-- Refresh the browser
-- Check if the selected column contains numeric data
-- Try a different visualization type
-
-## Future Enhancements
-
-- [ ] Support for more file formats (JSON, Parquet)
-- [ ] Machine learning model suggestions
-- [ ] Automated report generation (PDF/HTML)
-- [ ] Data cleaning and preprocessing tools
-- [ ] Multi-file comparison analysis
-- [ ] Database connectivity
-- [ ] Export processed data
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit issues or pull requests.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This project is open-source and available for educational and commercial use.
+This project is licensed under the MIT License.
 
 ## Author
 
-Developed by Rishav Raj
-
-## Support
-
-For questions or issues, please open an issue on the GitHub repository.
+**Rishav Raj**  
+GitHub: [@Rishav-raj-github](https://github.com/Rishav-raj-github)
 
 ---
 
-**Ready to explore your data? Run `streamlit run EDA_app.py` and visit http://localhost:8501** 🚀
+*Built with ❤️ for data scientists and analysts*
